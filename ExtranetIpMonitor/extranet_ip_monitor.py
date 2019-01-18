@@ -16,6 +16,7 @@ def get_extranet_ip():
             break
         else:
             raise Exception("Bad requests !")
+    print("Current extranet IP is : " + current_ip)
     return current_ip
 
 
