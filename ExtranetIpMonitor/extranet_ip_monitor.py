@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+#coding=utf-8
 import os
 import sys
 import threading
@@ -9,8 +9,13 @@ from Common.Global_Var import Global_Var
 
 
 def get_extranet_ip():
-    current_ip = os.popen("curl icanhazip.com").read()
-    current_ip = str(current_ip.replace("\n", ""))
+    for x in range(10):
+        current_ip = os.popen("curl icanhazip.com").read()
+        current_ip = str(current_ip.replace("\n", ""))
+        if current_ip != None:
+            break
+        else:
+            raise Exception("Bad requests !")
     return current_ip
 
 
