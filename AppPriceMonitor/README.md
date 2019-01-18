@@ -1,0 +1,4 @@
+- 基于requests和BeautifulSoup，监测AppStore应用价格
+- 传入参数分别为“网页版AppStore链接的app/后的文字”和”期望价格的字典格式值“：如“https://itunes.apple.com/cn/app/webssh-pro/id497714887“ 希望在0元以下提醒，则传入参数为”{"webssh-pro/id497714887":0}“
+- 支持多app同时监测，增加字典项即可
+- .sh文件加入crontab可定时运行
