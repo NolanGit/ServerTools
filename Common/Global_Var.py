@@ -15,7 +15,7 @@ class Global_Var(object):
         try:
             self.excel_name = 'excel.xls'
             xlrd.open_workbook(self.excel_name)
-        except :
+        except:
             print("created new excel called \"excel.xls\"")
             self.create_xls()
 
@@ -40,6 +40,7 @@ class Global_Var(object):
             y += 1
             result = self.excel_data_controller.get_value(self.excel_name, x, y)
             return result
+
 
 '''
 gv = Global_Var()
