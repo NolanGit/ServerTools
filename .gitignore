@@ -5,6 +5,7 @@ __pycache__/
 RaspberryPi.config
 .xls
 .swp
+*/*.xls
 # C extensions
 *.so
 *launch.json
