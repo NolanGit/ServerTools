@@ -9,12 +9,13 @@ from Common.Global_Var import Global_Var
 
 
 def get_extranet_ip():
-    for x in range(10):
+    for x in range(100):
         current_ip = os.popen("curl icanhazip.com").read()
         current_ip = str(current_ip.replace("\n", ""))
-        if current_ip != None:
+        if current_ip != None and current_ip !='':
             break
         else:
+            print("WARNING: Current extranet IP is : " + current_ip)
             raise Exception("Bad requests !")
     print("Current extranet IP is : " + current_ip)
     return current_ip
