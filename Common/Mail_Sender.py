@@ -10,14 +10,14 @@ from email.mime.text import MIMEText
 
 cf = configparser.ConfigParser()
 if 'Windows' in platform.platform() and 'Linux' not in platform.platform():
-    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using C:/Users/sunhaoran/Documents/GitHub/RaspberryPi/RaspberryPi.config ...')
-    cf.read('C:/Users/sunhaoran/Documents/GitHub/RaspberryPi/RaspberryPi.config')
+    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using C:/Users/sunhaoran/Documents/GitHub/ServerTools/ServerTools.config ...')
+    cf.read('C:/Users/sunhaoran/Documents/GitHub/ServerTools/ServerTools.config')
 elif 'Linux' in platform.platform() and 'Ubuntu' not in platform.platform():
-    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using /home/pi/Documents/Github/RaspberryPi/RaspberryPi.config ...')
-    cf.read('/home/pi/Documents/Github/RaspberryPi/RaspberryPi.config')
+    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using /home/pi/Documents/Github/ServerTools/ServerTools.config ...')
+    cf.read('/home/pi/Documents/Github/ServerTools/ServerTools.config')
 elif 'Ubuntu' in platform.platform():
-    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using /root/Documents/GitHub/RaspberryPi/RaspberryPi.config ...')
-    cf.read('/root/Documents/GitHub/RaspberryPi/RaspberryPi.config')
+    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using /root/Documents/GitHub/ServerTools/ServerTools.config ...')
+    cf.read('/root/Documents/GitHub/ServerTools/ServerTools.config')
 SENDER = cf.get('config', 'SENDER')
 PASSWORD = cf.get('config', 'PASSWORD')
 RECEIVER = cf.get('config', 'RECEIVER')

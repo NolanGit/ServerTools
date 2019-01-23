@@ -6,6 +6,8 @@ RaspberryPi.config
 .xls
 .swp
 */*.xls
+*/excel.xls
+AppPriceMonitor/excel.xls
 # C extensions
 *.so
 *launch.json

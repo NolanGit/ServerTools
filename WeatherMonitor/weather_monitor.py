@@ -13,14 +13,14 @@ from Common.Mail_Sender import MailSender
 def get_key():
     cf = configparser.ConfigParser()
     if 'Windows' in platform.platform() and 'Linux' not in platform.platform():
-        print('Reading C:/Users/sunhaoran/Documents/GitHub/RaspberryPi/RaspberryPi.config ...')
-        cf.read('C:/Users/sunhaoran/Documents/GitHub/RaspberryPi/RaspberryPi.config')
+        print('Reading C:/Users/sunhaoran/Documents/GitHub/ServerTools/ServerTools.config ...')
+        cf.read('C:/Users/sunhaoran/Documents/GitHub/ServerTools/ServerTools.config')
     elif 'Linux' in platform.platform() and 'Ubuntu' not in platform.platform():
-        print('Reading /home/pi/Documents/Github/RaspberryPi/RaspberryPi.config ...')
-        cf.read('/home/pi/Documents/Github/RaspberryPi/RaspberryPi.config')
+        print('Reading /home/pi/Documents/Github/ServerTools/ServerTools.config ...')
+        cf.read('/home/pi/Documents/Github/ServerTools/ServerTools.config')
     elif 'Ubuntu' in platform.platform():
-        print('Reading /root/Documents/GitHub/RaspberryPi/RaspberryPi.config ...')
-        cf.read('/root/Documents/GitHub/RaspberryPi/RaspberryPi.config')
+        print('Reading /root/Documents/GitHub/ServerTools/ServerTools.config ...')
+        cf.read('/root/Documents/GitHub/ServerTools/ServerTools.config')
     key = (cf.get('config', 'KEY'))
     return key
 
