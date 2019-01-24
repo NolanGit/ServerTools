@@ -77,8 +77,9 @@ app_dict = {
     '7-billion-humans/id1393923918': 0,
     'pico-图像标注/id1395700699': 0,
     'app/id1207354572': 0,
-    'app/id1372681079':0
-}
+    'app/id1372681079': 0,
+    '我的足迹/id1299001064': 0
+    }
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
 
