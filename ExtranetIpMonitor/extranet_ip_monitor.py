@@ -1,6 +1,8 @@
 #coding=utf-8
 import os
 import sys
+import socket
+import platform
 import threading
 sys.path.append('../')
 sys.path.append('../../')
@@ -30,6 +32,34 @@ def diff_extranet_ip(current_ip):
         ms = MailSender('IP Monitor', 'Extranet IP changed!', content)
         ms.send_it()
 
+def get_intranet_ip():
+    ip_address = "0.0.0.0"
+    sysstr = platform.system()
+    if sysstr == "Windows":
+        ip_address = socket.gethostbyname(socket.gethostname())
+        print ("Windows @ " + ip_address)
+        return ip_address
+    elif sysstr == "Linux":
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(('www.baidu.com', 0))
+            ip_address = s.getsockname()[0]
+        except:
+            ip_address = "x.x.x.x"
+        finally:
+            s.close()
+        print ("Linux @ " + ip_address)
+        return ip_address
+    elif sysstr == "Darwin":
+        ip_address = socket.gethostbyname(socket.gethostname())
+        print ("Mac @ " + ip_address)
+        return ip_address
+    else:
+        print ("Other System @ some ip")
+        return("x.x.x.x")
 
-current_ip = get_extranet_ip()
-diff_extranet_ip(current_ip)
+
+current_extranet_ip = get_extranet_ip()
+diff_extranet_ip(current_extranet_ip)
+current_intranet_ip = get_intranet_ip()
+print(current_intranet_ip)
