@@ -60,7 +60,7 @@ def diff_extranet_ip(current_extranet_ip, current_intranet_ip):
     global_var = Global_Var()
     history_extranet_ip = global_var.get_value('current_extranet_ip')
     history_intranet_ip = global_var.get_value('current_intranet_ip')
-    content = None
+    content = ''
 
     if (current_extranet_ip != history_extranet_ip or history_extranet_ip == None) and current_extranet_ip != None:
         global_var.set_value('current_extranet_ip', current_extranet_ip)
@@ -68,9 +68,9 @@ def diff_extranet_ip(current_extranet_ip, current_intranet_ip):
     if (current_intranet_ip != history_intranet_ip or history_intranet_ip == None) and current_intranet_ip != None:
         global_var.set_value('current_intranet_ip', current_intranet_ip)
         content = content + 'New intranet IP is ' + '[' + current_intranet_ip + ']' + '\n' + 'History intranet IP is ' + '[' + current_intranet_ip + ']' + '\r'
-
-    ms = MailSender('IP Monitor', 'IP changed!', content)
-    ms.send_it()
+    if content != '':
+        ms = MailSender('IP Monitor', 'IP changed!', content)
+        ms.send_it()
 
 
 current_extranet_ip = get_extranet_ip()
