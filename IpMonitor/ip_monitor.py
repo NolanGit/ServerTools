@@ -2,6 +2,7 @@
 import os
 import sys
 import socket
+import requests
 import platform
 import threading
 sys.path.append('../')
@@ -12,8 +13,13 @@ from Common.Mail_Sender import MailSender
 
 def get_extranet_ip():
     for x in range(100):
-        current_ip = os.popen("curl icanhazip.com").read()
-        current_ip = str(current_ip.replace("\n", ""))
+        #current_ip = os.popen("curl icanhazip.com").read()
+        #current_ip = str(current_ip.replace("\n", ""))
+
+        url = r'http://www.trackip.net/'
+        r = requests.get(url)
+        txt = r.text
+        current_ip = txt[txt.find('title') + 6:txt.find('/title') - 1]
 
         if current_ip != None and current_ip != '':
             break
