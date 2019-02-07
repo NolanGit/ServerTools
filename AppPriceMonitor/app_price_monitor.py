@@ -5,6 +5,7 @@ import requests
 import threading
 sys.path.append('../')
 sys.path.append('../../')
+
 from bs4 import BeautifulSoup
 from Common.Tools import Tools
 from Common.Mail_Sender import MailSender
@@ -17,10 +18,11 @@ def get_app_price(app_name_id):
     soup = BeautifulSoup(response.text, 'lxml')
     app_name = soup.find(class_='product-header__title app-header__title')
     app_price = soup.find(class_='inline-list__item inline-list__item--bulleted')
+
     for name in app_name.strings:
         app_name = name.strip()
         break
-    #print(app_name + ' : ' + app_price.text)
+
     return (app_name, float(app_price.text.split('¥')[1]))
 
 
@@ -28,14 +30,19 @@ def app_price_monitor(app_dict):
     # 判断是否触发邮件通知阈值
     content = ''
     globalvar = Global_Var()
+
     for key in app_dict.keys():
         app_name, app_price = get_app_price(key)
+
         if app_price <= float(app_dict[key]):
             content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !'
+    
     if content != '':
         app_price_monitor_mail_flag = globalvar.get_value('app_price_monitor_mail_flag')
+        
         if app_price_monitor_mail_flag == "None":
             globalvar.set_value('app_price_monitor_mail_flag', 1)
+        
         if app_price_monitor_mail_flag == 1:
             ms = MailSender('AppPriceMonitor', 'App Discount!', content)
             ms.send_it()
@@ -54,19 +61,24 @@ def print_result_order_by_length(app_dict):
     # 按照app标题长度由短到长打印结果至控制台
     result = []
     count = 0
+
     for key in app_dict.keys(): 
         Tools().show_process_bar(count, int(len(app_dict)))
         app_name, app_price = get_app_price(key)
         result.append([app_name, app_price])
         count += 1
+
     for x in range(len(result)):
         for y in range(len(result) - x - 1):
             if len(result[y][0]) > len(result[y + 1][0]):
                 result[y][0], result[y + 1][0] = result[y + 1][0], result[y][0]
                 result[y][1], result[y + 1][1] = result[y + 1][1], result[y][1]
+
     print('=' * 20 + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + '=' * 20)
+
     for x in range(len(result)):
         print(result[x][0] + ' : ' + '¥' + str(result[x][1]))
+
     print('=' * 59)
 
 
@@ -81,6 +93,7 @@ app_dict = {
     '我的足迹/id1299001064': 0,
     'gorogoa/id1269225754': 0
     }
+    
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
 
