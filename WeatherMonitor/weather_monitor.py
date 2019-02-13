@@ -42,10 +42,10 @@ def get_weather(key):
     tomorow_tmp_max = tomorow_forecast['tmp_max']  # 明天最高气温
     tomorow_tmp_min = tomorow_forecast['tmp_min']  # 明天最低气温
     if (int(today_code_n) > 299 and int(today_code_n) < 500) or (int(tomorow_code_d) > 299 and int(tomorow_code_d) < 500):
-        weather_content = '降水注意：今天夜间天气为【' + today_txt_n + '】，最高气温：' + str(today_tmp_max) + '°C，最低气温：' + str(today_tmp_min) + '°C；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】，最高气温' + str(tomorow_tmp_max) + '°C，最低气温' + str(
+        weather_content = '降水注意：' + '\n' + '今天夜间天气为【' + today_txt_n + '】，最高气温：' + str(today_tmp_max) + '°C，最低气温：' + str(today_tmp_min) + '°C；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】，最高气温' + str(tomorow_tmp_max) + '°C，最低气温' + str(
             tomorow_tmp_min) + '°C。'
     if (int(today_code_n) > 501 and int(today_code_n) < 900) or (int(tomorow_code_d) > 501 and int(tomorow_code_d) < 900):
-        air_content = '空气质量注意：今天夜间天气为【' + today_txt_n + '】；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】'
+        air_content = '空气质量注意：' + '\n' + '今天夜间天气为【' + today_txt_n + '】；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】'
     current_month = time.strftime("%m", time.localtime())
     if (int(current_month) > 0 and int(current_month) < 5) or (int(current_month) > 8 and int(current_month) <= 12):
         print('当前是%s月%s日' % (current_month,time.strftime("%d", time.localtime())))
