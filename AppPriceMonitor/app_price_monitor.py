@@ -17,7 +17,7 @@ def get_app_price(app_name_id):
     response = requests.get("https://itunes.apple.com/cn/app/" + app_name_id)
     soup = BeautifulSoup(response.text, 'lxml')
     app_name = soup.find(class_='product-header__title app-header__title')
-    app_price = soup.find(class_='inline-list__item inline-list__item--bulleted')
+    app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
 
     for name in app_name.strings:
         app_name = name.strip()
