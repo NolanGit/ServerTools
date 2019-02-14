@@ -15,6 +15,7 @@ from Common.Global_Var import Global_Var
 def get_app_price(app_name_id):
     # 爬取数据
     response = requests.get("https://itunes.apple.com/cn/app/" + app_name_id)
+    time.sleep(1)
     soup = BeautifulSoup(response.text, 'lxml')
     app_name = soup.find(class_='product-header__title app-header__title')
     app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
