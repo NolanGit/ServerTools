@@ -16,7 +16,7 @@ count = 0
 
 def get_app_price(app_name_id):
     '''
-        爬取数据
+        爬取数据：接收app的Url后缀，返回app价格。
     '''
     global count
     count += 1
@@ -57,7 +57,7 @@ def get_app_price(app_name_id):
 
 def app_price_monitor(app_dict):
     '''
-        判断是否触发邮件通知阈值
+        价格监控：接收格式化的app dict，如果超过阈值则触发邮件通知。
     '''
     content = ''
     globalvar = Global_Var()
@@ -83,15 +83,18 @@ def app_price_monitor(app_dict):
 
 def count_time_thread():
     '''
-        防止推送邮件被多次触发
+        防止推送邮件被多次触发设置的flag。
     '''
     globalvar = Global_Var()
     globalvar.set_value('app_price_monitor_mail_flag', 1)
 
 
 def print_result_order_by_length(app_dict):
+    '''
+        按照app标题长度由短到长打印结果至控制台，无邮件通知逻辑：接收格式化的app dict，打印相关信息于控制台。
+    '''
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Working...')
-    # 按照app标题长度由短到长打印结果至控制台
+    
     result = []
     count = 0
 
@@ -116,12 +119,18 @@ def print_result_order_by_length(app_dict):
 
 
 def get_app_price_and_count(app_name_id, app_target_price):
+    '''
+        适用于多线程的价格监控逻辑
+    '''
     result = []
     app_name, app_price = get_app_price(app_name_id)
     result.append([app_name, app_price])
 
 
 def mutiple_thread(app_dict):
+    '''
+        多线程爬取数据
+    '''
     start_times = int(len(app_dict) / 5)
     start_times_left = len(app_dict) % 5
     for x in range(start_times):
@@ -144,5 +153,3 @@ app_dict = {
 
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
-
-#'https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&ch=&wd=App+Store+%E9%A2%84%E8%A7%88+shelly+appstore+site%3Aitunes.apple.com'
