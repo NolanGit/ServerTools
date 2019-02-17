@@ -107,9 +107,10 @@ def print_result_order_by_length(app_dict):
 
     for x in range(len(result)):
         for y in range(len(result) - x - 1):
-            chinese_length_1=len(re.findall(r'[\u4e00-\u9fff]', result[y][0]))
-            chinese_length_2=len(re.findall(r'[\u4e00-\u9fff]', result[y+ 1][0]))
-            if 2*chinese_length_1+1*(len(result[y][0])-chinese_length_1) > 2*chinese_length_2+1*(len(result[y + 1][0])-chinese_length_2):
+            chinese_length_1 = len(re.findall(r'[\u4e00-\u9fff]', result[y][0]))
+            chinese_length_2 = len(re.findall(r'[\u4e00-\u9fff]', result[y + 1][0]))
+
+            if 2 * chinese_length_1 + 1 * (len(result[y][0]) - chinese_length_1) > 2 * chinese_length_2 + 1 * (len(result[y + 1][0]) - chinese_length_2):
                 result[y][0], result[y + 1][0] = result[y + 1][0], result[y][0]
                 result[y][1], result[y + 1][1] = result[y + 1][1], result[y][1]
 
@@ -154,7 +155,8 @@ app_dict = {
     'gorogoa/id1269225754': 0,
     'hyper-ping/id1276204653': 0,
     'cloud-speed/id1299527944': 0,
-    'onescreen-带壳截屏自由创作/id1355476695': 0
+    'onescreen-带壳截屏自由创作/id1355476695': 0,
+    'thor-http-抓包嗅探分析-接口调试-网络协议/id1210562295': 0
 }
 
 print_result_order_by_length(app_dict)
