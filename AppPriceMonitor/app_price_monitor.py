@@ -22,7 +22,7 @@ def get_app_price(app_name_id):
     count += 1
 
     response = requests.get("https://itunes.apple.com/cn/app/" + app_name_id)
-    time.sleep(3)
+    # time.sleep(3)
     soup = BeautifulSoup(response.text, 'lxml')
 
     app_name = soup.find(class_='product-header__title app-header__title')
