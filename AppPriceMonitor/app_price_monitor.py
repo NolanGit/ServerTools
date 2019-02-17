@@ -107,8 +107,8 @@ def print_result_order_by_length(app_dict):
 
     for x in range(len(result)):
         for y in range(len(result) - x - 1):
-            chinese_length_1=len(re.findall(ur'[\u4e00-\u9fff]', result[y][0]))
-            chinese_length_2=len(re.findall(ur'[\u4e00-\u9fff]', result[y+ 1][0]))
+            chinese_length_1=len(re.findall(r'[\u4e00-\u9fff]', result[y][0]))
+            chinese_length_2=len(re.findall(r'[\u4e00-\u9fff]', result[y+ 1][0]))
             if 2*chinese_length_1+1*(len(result[y][0])-chinese_length_1) > 2*chinese_length_2+1*(len(result[y + 1][0])-chinese_length_2):
                 result[y][0], result[y + 1][0] = result[y + 1][0], result[y][0]
                 result[y][1], result[y + 1][1] = result[y + 1][1], result[y][1]
