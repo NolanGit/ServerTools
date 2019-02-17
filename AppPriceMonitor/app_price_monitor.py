@@ -11,7 +11,6 @@ from Common.Tools import Tools
 from Common.Mail_Sender import MailSender
 from Common.Global_Var import Global_Var
 
-global count
 count = 0
 
 
@@ -29,9 +28,9 @@ def get_app_price(app_name_id):
     app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
 
     if app_name == None or app_price == None:
-        if count >=10:
+        if count >= 10:
             globalvar = Global_Var()
-            content = 'app name is ' + str(app_name) + 'app price is ' + str(app_price)
+            content = 'app name is ' + str(app_name) + 'app price is ' + str(app_price) + '\n' + response.text
             ms = MailSender('AppPriceMonitorError', 'Crawling data failed!!!', content)
             ms.send_it()
             globalvar.set_value('app_price_monitor_mail_flag', 0)
