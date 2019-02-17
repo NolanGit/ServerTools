@@ -64,6 +64,7 @@ def app_price_monitor(app_dict):
 
     for key in app_dict.keys():
         app_name, app_price = get_app_price(key)
+        print(app_name,app_price)
 
         if app_price <= float(app_dict[key]):
             content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !'
