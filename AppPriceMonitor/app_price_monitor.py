@@ -48,7 +48,7 @@ def get_app_price(app_name_id):
         break
 
     if app_price.text == '免费':
-        app_price = 0
+        app_price = 0.0
     else:
         app_price = float(app_price.text.split('¥')[1])
 
@@ -65,15 +65,8 @@ def app_price_monitor(app_dict):
     for key in app_dict.keys():
         app_name, app_price = get_app_price(key)
 
-        
-        print(app_name,app_price,app_dict[key])
-
         if app_price <= float(app_dict[key]):
             content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !'
-
-
-    print(content)
-
 
     if content != '':
         app_price_monitor_mail_flag = globalvar.get_value('app_price_monitor_mail_flag')
@@ -158,7 +151,7 @@ app_dict = {
     'gorogoa/id1269225754': 0,
     'hyper-ping/id1276204653': 0,
     'cloud-speed/id1299527944': 0,
-    'star-order-github-star管理利器/id1073829178': 0
+    'onescreen-带壳截屏自由创作/id1355476695': 0
 }
 
 print_result_order_by_length(app_dict)
