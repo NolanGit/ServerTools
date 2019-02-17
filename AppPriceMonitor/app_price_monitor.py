@@ -24,8 +24,11 @@ def get_app_price(app_name_id):
     response = requests.get("https://itunes.apple.com/cn/app/" + app_name_id)
     time.sleep(3)
     soup = BeautifulSoup(response.text, 'lxml')
+    
     app_name = soup.find(class_='product-header__title app-header__title')
-    app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
+    app_price = soup.find(class_='inline-list__item inline-list__item--bulleted')
+    if app_price == None:
+        app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
 
     if app_name == None or app_price == None:
         if count >= 10:
