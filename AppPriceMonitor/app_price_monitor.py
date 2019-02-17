@@ -94,7 +94,7 @@ def print_result_order_by_length(app_dict):
         按照app标题长度由短到长打印结果至控制台，无邮件通知逻辑：接收格式化的app dict，打印相关信息于控制台。
     '''
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Working...')
-    
+
     result = []
     count = 0
 
@@ -148,7 +148,10 @@ app_dict = {
     'app/id1207354572': 0,
     'app/id1372681079': 0,
     '我的足迹/id1299001064': 0,
-    'gorogoa/id1269225754': 0
+    'gorogoa/id1269225754': 0,
+    'hyper-ping/id1276204653': 0,
+    'cloud-speed/id1299527944': 0,
+    'star-order-github-star管理利器/id1073829178': 0
 }
 
 print_result_order_by_length(app_dict)
