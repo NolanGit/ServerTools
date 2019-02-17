@@ -11,23 +11,34 @@ from Common.Tools import Tools
 from Common.Mail_Sender import MailSender
 from Common.Global_Var import Global_Var
 
+global count
+count = 0
+
 
 def get_app_price(app_name_id):
-    # 爬取数据
+    '''
+        爬取数据
+    '''
+    global count
+    count += 1
+
     response = requests.get("https://itunes.apple.com/cn/app/" + app_name_id)
-    time.sleep(10)
+    time.sleep(3)
     soup = BeautifulSoup(response.text, 'lxml')
     app_name = soup.find(class_='product-header__title app-header__title')
     app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
 
     if app_name == None or app_price == None:
-        globalvar = Global_Var()
-        content = 'app name is ' + str(app_name) + 'app price is ' + str(app_price)
-        ms = MailSender('AppPriceMonitorError', 'Crawling data failed!!!', content)
-        ms.send_it()
-        globalvar.set_value('app_price_monitor_mail_flag', 0)
-        threading.Timer(21600, count_time_thread).start()
-        return (None, None)
+        if count >=10:
+            globalvar = Global_Var()
+            content = 'app name is ' + str(app_name) + 'app price is ' + str(app_price)
+            ms = MailSender('AppPriceMonitorError', 'Crawling data failed!!!', content)
+            ms.send_it()
+            globalvar.set_value('app_price_monitor_mail_flag', 0)
+            threading.Timer(21600, count_time_thread).start()
+            return (None, None)
+        else:
+            get_app_price(app_name_id)
 
     for name in app_name.strings:
         app_name = name.strip()
@@ -37,7 +48,9 @@ def get_app_price(app_name_id):
 
 
 def app_price_monitor(app_dict):
-    # 判断是否触发邮件通知阈值
+    '''
+        判断是否触发邮件通知阈值
+    '''
     content = ''
     globalvar = Global_Var()
 
@@ -61,7 +74,9 @@ def app_price_monitor(app_dict):
 
 
 def count_time_thread():
-    # 防止推送邮件被多次触发
+    '''
+        防止推送邮件被多次触发
+    '''
     globalvar = Global_Var()
     globalvar.set_value('app_price_monitor_mail_flag', 1)
 
@@ -90,6 +105,21 @@ def print_result_order_by_length(app_dict):
         print(str(result[x][0]) + ' : ' + '¥' + str(result[x][1]))
 
     print('=' * 59)
+
+
+def get_app_price_and_count(app_name_id, app_target_price):
+    result = []
+    app_name, app_price = get_app_price(app_name_id)
+    result.append([app_name, app_price])
+
+
+def mutiple_thread(app_dict):
+    start_times = int(len(app_dict) / 5)
+    start_times_left = len(app_dict) % 5
+    for x in range(start_times):
+        thread_dict = []
+        for i in range(5):
+            thread_dict.append(threading.Thread(target=get_app_price_and_count, args=(app_dict.popitem()[0], app_dict.popitem()[1])))
 
 
 app_dict = {
