@@ -24,10 +24,11 @@ def get_app_price(app_name_id):
     response = requests.get("https://itunes.apple.com/cn/app/" + app_name_id)
     time.sleep(3)
     soup = BeautifulSoup(response.text, 'lxml')
-    
+
     app_name = soup.find(class_='product-header__title app-header__title')
+
     app_price = soup.find(class_='inline-list__item inline-list__item--bulleted')
-    if app_price == None:
+    if app_price == None or app_price == '' or app_price = 'None':
         app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
 
     if app_name == None or app_price == None:
@@ -46,7 +47,12 @@ def get_app_price(app_name_id):
         app_name = name.strip()
         break
 
-    return (app_name, float(app_price.text.split('¥')[1]))
+    if app_price.text == '免费':
+        app_price = 0
+    else:
+        app_price = float(app_price.text.split('¥')[1])
+
+    return (app_name, app_price)
 
 
 def app_price_monitor(app_dict):
