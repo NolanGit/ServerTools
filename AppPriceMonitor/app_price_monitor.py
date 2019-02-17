@@ -64,10 +64,16 @@ def app_price_monitor(app_dict):
 
     for key in app_dict.keys():
         app_name, app_price = get_app_price(key)
-        print(app_name,app_price)
+
+        
+        print(app_name,app_price,app_dict[key])
 
         if app_price <= float(app_dict[key]):
             content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !'
+
+
+    print(content)
+
 
     if content != '':
         app_price_monitor_mail_flag = globalvar.get_value('app_price_monitor_mail_flag')
