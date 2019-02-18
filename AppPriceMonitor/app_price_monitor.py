@@ -2,6 +2,7 @@
 import re
 import sys
 import time
+import queue
 import requests
 import threading
 sys.path.append('../')
@@ -13,6 +14,7 @@ from Common.Mail_Sender import MailSender
 from Common.Global_Var import Global_Var
 
 count = 0
+q = queue.Queue()
 
 
 def get_app_price(app_name_id):
@@ -23,7 +25,6 @@ def get_app_price(app_name_id):
     count += 1
 
     response = requests.get("https://itunes.apple.com/cn/app/" + app_name_id)
-    # time.sleep(3)
     soup = BeautifulSoup(response.text, 'lxml')
 
     app_name = soup.find(class_='product-header__title app-header__title')
@@ -32,7 +33,7 @@ def get_app_price(app_name_id):
     if app_price == None or app_price == '' or app_price == 'None':
         app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
 
-    if app_name == None or app_price == None:
+    if app_name == None or app_price == None or app_price == '' or app_price == 'None':
         if count >= 10:
             globalvar = Global_Var()
             content = 'app name is ' + str(app_name) + 'app price is ' + str(app_price) + '\n' + response.text
@@ -122,26 +123,33 @@ def print_result_order_by_length(app_dict):
     print('=' * 59)
 
 
-def get_app_price_and_count(app_name_id, app_target_price):
+def get_app_price_and_count(app_name_id):
     '''
         适用于多线程的价格监控逻辑
     '''
-    result = []
     app_name, app_price = get_app_price(app_name_id)
-    result.append([app_name, app_price])
+    q.put({app_name:app_price})
 
 
 def mutiple_thread(app_dict):
     '''
         多线程爬取数据
     '''
+    result = {}
     start_times = int(len(app_dict) / 5)
     start_times_left = len(app_dict) % 5
     for x in range(start_times):
-        thread_dict = []
         for i in range(5):
-            thread_dict.append(threading.Thread(target=get_app_price_and_count, args=(app_dict.popitem()[0], app_dict.popitem()[1])))
-
+            threading.Thread(target=get_app_price_and_count, args=(app_dict.popitem()[0],).start
+            Tools().show_process_bar(5*x+i, int(len(app_dict)))
+        for t in range(100):
+            if q.qsize()==5:
+                while not q.empty():
+                    result=result+q.get()
+                break
+            else:
+                time.sleep(0.2)
+    print(result)
 
 app_dict = {
     'webssh-pro/id497714887': 0,
@@ -158,6 +166,8 @@ app_dict = {
     'onescreen-带壳截屏自由创作/id1355476695': 0,
     'thor-http-抓包嗅探分析-接口调试-网络协议/id1210562295': 0
 }
-
+'''
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
+'''
+mutiple_thread(app_dict)
