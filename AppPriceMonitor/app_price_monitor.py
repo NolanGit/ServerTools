@@ -140,8 +140,8 @@ def mutiple_thread(app_dict):
     start_times_left = len(app_dict) % 5
     for x in range(start_times):
         for i in range(5):
-            threading.Thread(target=get_app_price_and_count, args=(app_dict.popitem()[0],).start
-            #Tools().show_process_bar(5*x+i, int(len(app_dict)))
+            threading.Thread(target=get_app_price_and_count, args=(app_dict.popitem()[0],)).start
+            Tools().show_process_bar(5*x+i, int(len(app_dict)))
         for t in range(100):
             if q.qsize()==5:
                 while not q.empty():
