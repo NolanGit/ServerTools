@@ -136,8 +136,11 @@ def mutiple_thread(app_dict):
         多线程爬取数据
     '''
     result = {}
+    print('len_app_dict'+str(len(app_dict)))
     start_times = int(len(app_dict) / 5)
+    print(start_times)
     start_times_left = len(app_dict) % 5
+    print(start_times_left)
     for x in range(start_times):
         for i in range(5):
             threading.Thread(target=get_app_price_and_count, args=(app_dict.popitem()[0],)).start
