@@ -129,6 +129,7 @@ def get_app_price_and_count(app_name_id):
     '''
     print('getting '+app_name_id)
     app_name, app_price = get_app_price(app_name_id)
+    print(app_name, app_price)
     q.put({app_name:app_price})
 
 
