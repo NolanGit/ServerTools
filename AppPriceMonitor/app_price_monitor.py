@@ -127,7 +127,7 @@ def get_app_price_and_count(app_name_id):
     '''
         适用于多线程的价格监控逻辑
     '''
-    print('getting 'app_name_id)
+    print('getting '+app_name_id)
     app_name, app_price = get_app_price(app_name_id)
     q.put({app_name:app_price})
 
