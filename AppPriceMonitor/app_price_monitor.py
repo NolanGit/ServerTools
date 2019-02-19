@@ -145,11 +145,12 @@ def mutiple_thread(app_dict):
         for i in range(5):
             app_name_id = app_dict.popitem()[0]
             threading.Thread(target=get_app_price_and_count, args=(app_name_id, )).start
-            Tools().show_process_bar(5 * x + i, len_app_dict)
+            #Tools().show_process_bar(5 * x + i, len_app_dict)
         for t in range(100):
             if q.qsize() == 5:
                 while not q.empty():
-                    print(result)
+                    temp_result = q.get()
+                    print(temp_result)
                     result = dict(result, **q.get())
                 break
             else:
@@ -157,7 +158,7 @@ def mutiple_thread(app_dict):
     for x in range(start_times_left):
         app_name_id = app_dict.popitem()[0]
         threading.Thread(target=get_app_price_and_count, args=(app_name_id, )).start
-        Tools().show_process_bar(5 * start_times + x, len_app_dict)
+        #Tools().show_process_bar(5 * start_times + x, len_app_dict)
         for t in range(100):
             if q.qsize() == start_times_left:
                 while not q.empty():
