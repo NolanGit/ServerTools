@@ -127,6 +127,7 @@ def get_app_price_and_count(app_name_id):
     '''
         适用于多线程的价格监控逻辑
     '''
+    print('working...')
     app_name, app_price = get_app_price(app_name_id)
     q.put({app_name: app_price})
 
@@ -162,7 +163,8 @@ def mutiple_thread(app_dict):
         for t in range(100):
             if q.qsize() == start_times_left:
                 while not q.empty():
-                    print(result)
+                    temp_result = q.get()
+                    print(temp_result)
                     result = dict(result, **q.get())
                 break
             else:
@@ -189,4 +191,8 @@ app_dict = {
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
 '''
-mutiple_thread(app_dict)
+#mutiple_thread(app_dict)
+threading.Thread(target=get_app_price_and_count, args=('webssh-pro/id497714887', )).start
+while not q.empty():
+    temp_result = q.get()
+    print(temp_result)
