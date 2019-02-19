@@ -127,9 +127,7 @@ def get_app_price_and_count(app_name_id):
     '''
         适用于多线程的价格监控逻辑
     '''
-    print('getting ' + app_name_id)
     app_name, app_price = get_app_price(app_name_id)
-    print(app_name, app_price)
     q.put({app_name: app_price})
 
 
@@ -178,4 +176,9 @@ app_dict = {
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
 '''
-mutiple_thread(app_dict)
+#mutiple_thread(app_dict)
+get_app_price_and_count('thor-http-抓包嗅探分析-接口调试-网络协议/id1210562295')
+while not q.empty():
+    result = q.get()
+    time.sleep(0.1)
+print(result)
