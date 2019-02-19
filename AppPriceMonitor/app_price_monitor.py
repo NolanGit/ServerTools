@@ -149,6 +149,7 @@ def mutiple_thread(app_dict):
         for t in range(100):
             if q.qsize() == 5:
                 while not q.empty():
+                    print(result)
                     result = dict(result, **q.get())
                 break
             else:
@@ -160,7 +161,8 @@ def mutiple_thread(app_dict):
         for t in range(100):
             if q.qsize() == start_times_left:
                 while not q.empty():
-                    result = result + q.get()
+                    print(result)
+                    result = dict(result, **q.get())
                 break
             else:
                 time.sleep(0.5)
