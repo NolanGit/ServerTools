@@ -145,7 +145,9 @@ def mutiple_thread(app_dict):
     for x in range(start_times):
         for i in range(5):
             app_name_id = app_dict.popitem()[0]
-            threading.Thread(target=get_app_price_and_count, args=(app_name_id, )).start
+            thread_t=threading.Thread(target=get_app_price_and_count, args=(app_name_id, ))
+            thread_t.setDaemon(True)
+            thread_t.start
             #Tools().show_process_bar(5 * x + i, len_app_dict)
         for t in range(100):
             if q.qsize() == 5:
@@ -158,7 +160,9 @@ def mutiple_thread(app_dict):
                 time.sleep(0.5)
     for x in range(start_times_left):
         app_name_id = app_dict.popitem()[0]
-        threading.Thread(target=get_app_price_and_count, args=(app_name_id, )).start
+        thread_t=threading.Thread(target=get_app_price_and_count, args=(app_name_id, ))
+        thread_t.setDaemon(True)
+        thread_t.start
         #Tools().show_process_bar(5 * start_times + x, len_app_dict)
         for t in range(100):
             if q.qsize() == start_times_left:
@@ -192,7 +196,9 @@ print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
 '''
 #mutiple_thread(app_dict)
-threading.Thread(target=get_app_price_and_count, args=('webssh-pro/id497714887', )).start
+thread_t=threading.Thread(target=get_app_price_and_count, args=('webssh-pro/id497714887', ))
+thread_t.setDaemon(True)
+thread_t.start
 while not q.empty():
     temp_result = q.get()
     print(temp_result)
