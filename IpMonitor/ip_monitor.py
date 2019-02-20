@@ -32,7 +32,7 @@ def get_intranet_ip():
 
     if sysstr == "Windows":
         ip_address = socket.gethostbyname(socket.gethostname())
-        print("Windows @ " + ip_address)
+        print("Current intranet IP is Windows @ " + ip_address)
         return ip_address
 
     elif sysstr == "Linux":
@@ -44,12 +44,12 @@ def get_intranet_ip():
             ip_address = "x.x.x.x"
         finally:
             s.close()
-        print("Linux @ " + ip_address)
+        print("Current intranet IP is Linux @ " + ip_address)
         return ip_address
 
     elif sysstr == "Darwin":
         ip_address = socket.gethostbyname(socket.gethostname())
-        print("Mac @ " + ip_address)
+        print("Current intranet IP is Mac @ " + ip_address)
         return ip_address
 
     else:
@@ -70,8 +70,10 @@ def diff_extranet_ip(current_extranet_ip, current_intranet_ip):
     if (current_intranet_ip != history_intranet_ip or history_intranet_ip == None) and current_intranet_ip != None:
         global_var.set_value('current_intranet_ip', current_intranet_ip)
         content = content + 'New intranet IP is ' + '[' + current_intranet_ip + ']' + '\n' + 'History intranet IP is ' + '[' + history_intranet_ip + ']' + '\r'
-    print('history_intranet_ip:' + history_intranet_ip)
-    print('Content: ' + content)
+    
+    print('History extranet IP is :' + history_extranet_ip)
+    print('History intranet IP is :' + history_intranet_ip)
+    print('Mail content is : ' + content)
 
     if content != '':
         ms = MailSender('IP Monitor', 'IP changed!', content)
