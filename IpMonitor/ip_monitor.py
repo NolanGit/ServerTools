@@ -71,6 +71,8 @@ def diff_extranet_ip(current_extranet_ip, current_intranet_ip):
         global_var.set_value('current_intranet_ip', current_intranet_ip)
         content = content + 'New intranet IP is ' + '[' + current_intranet_ip + ']' + '\n' + 'History intranet IP is ' + '[' + history_intranet_ip + ']' + '\r'
     
+    print('Content: '+content)
+    
     if content != '':
         ms = MailSender('IP Monitor', 'IP changed!', content)
         ms.send_it()
