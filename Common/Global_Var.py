@@ -10,17 +10,17 @@ __author__ = 'sunhaoran'
 
 class Global_Var(object):
 
-    def __init__(self):
+    def __init__(self, excel_name='excel.xls'):
         self.excel_data_controller = Excel_Data_Controller()
         try:
-            self.excel_name = 'excel.xls'
+            self.excel_name = excel_name
             xlrd.open_workbook(self.excel_name)
         except:
-            print("created new excel called \"excel.xls\"")
-            self.create_xls()
+            print("created new excel called \"" + excel_name + "\"")
+            self.create_xls(excel_name)
 
-    def create_xls(self):
-        self.excel_name = self.excel_data_controller.create_xls()
+    def create_xls(self, excel_name):
+        self.excel_name = self.excel_data_controller.create_xls(excel_name=excel_name)
 
     def set_value(self, name, value):
         x, y = self.excel_data_controller.get_values_coordinate(self.excel_name, name)
