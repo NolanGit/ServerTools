@@ -32,7 +32,7 @@ def get_intranet_ip():
 
     if sysstr == "Windows":
         ip_address = socket.gethostbyname(socket.gethostname())
-        print("Current intranet IP is Windows @ " + ip_address)
+        print("Current intranet IP is :" + ip_address)
         return ip_address
 
     elif sysstr == "Linux":
@@ -44,12 +44,12 @@ def get_intranet_ip():
             ip_address = "x.x.x.x"
         finally:
             s.close()
-        print("Current intranet IP is Linux @ " + ip_address)
+        print("Current intranet IP is :" + ip_address)
         return ip_address
 
     elif sysstr == "Darwin":
         ip_address = socket.gethostbyname(socket.gethostname())
-        print("Current intranet IP is Mac @ " + ip_address)
+        print("Current intranet IP is :" + ip_address)
         return ip_address
 
     else:
