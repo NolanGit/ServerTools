@@ -191,9 +191,10 @@ app_dict = {
     'onescreen-带壳截屏自由创作/id1355476695': 0,
     'thor-http-抓包嗅探分析-接口调试-网络协议/id1210562295': 0
 }
-'''
+
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
+
 '''
 #mutiple_thread(app_dict)
 thread_t=threading.Thread(target=get_app_price_and_count, args=('webssh-pro/id497714887', ))
@@ -202,3 +203,4 @@ thread_t.start
 while not q.empty():
     temp_result = q.get()
     print(temp_result)
+'''
