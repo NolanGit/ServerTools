@@ -34,8 +34,9 @@ def get_app_price(app_name_id):
         app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
 
     if app_name == None or app_price == None or app_price == '' or app_price == 'None':
-        if count >= 10:
-            globalvar = Global_Var()
+        globalvar = Global_Var()
+        app_price_monitor_mail_flag = globalvar.get_value('app_price_monitor_mail_flag')
+        if count >= 10 and app_price_monitor_mail_flag == 1:
             content = 'app name is ' + str(app_name) + 'app price is ' + str(app_price) + '\n' + response.text
             ms = MailSender('AppPriceMonitorError', 'Crawling data failed!!!', content)
             ms.send_it()
@@ -86,6 +87,7 @@ def app_price_monitor(app_dict):
 def count_time_thread():
     '''
         防止推送邮件被多次触发设置的flag。
+        flag为1时可以发送，为0时不能发送
     '''
     globalvar = Global_Var()
     globalvar.set_value('app_price_monitor_mail_flag', 1)
@@ -93,7 +95,8 @@ def count_time_thread():
 
 def print_result_order_by_length(app_dict):
     '''
-        按照app标题长度由短到长打印结果至控制台，无邮件通知逻辑：接收格式化的app dict，打印相关信息于控制台。
+        按照app标题长度由短到长打印结果至控制台，无邮件通知逻辑。
+        接收格式化的app dict，打印相关信息于控制台。
     '''
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Working...')
 
