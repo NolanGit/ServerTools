@@ -34,14 +34,18 @@ def get_app_price(app_name_id):
         app_price = soup.find(class_='inline-list__item inline-list__item--bulleted app-header__list__item--price')
 
     if app_name == None or app_price == None or app_price == '' or app_price == 'None':
+
         globalvar = Global_Var()
         app_price_monitor_mail_flag = globalvar.get_value('app_price_monitor_mail_flag')
+
         if count >= 10 and app_price_monitor_mail_flag == 1:
             content = 'app name is ' + str(app_name) + 'app price is ' + str(app_price) + '\n' + response.text
             ms = MailSender('AppPriceMonitorError', 'Crawling data failed!!!', content)
             ms.send_it()
+
             globalvar.set_value('app_price_monitor_mail_flag', 0)
             threading.Timer(21600, count_time_thread).start()
+            
             return (None, None)
         else:
             get_app_price(app_name_id)
