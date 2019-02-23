@@ -19,7 +19,7 @@ q = queue.Queue()
 
 def get_app_price(app_name_id):
     '''
-        爬取数据：接收app的Url后缀，返回app价格。
+        爬取数据：接收app的Url后缀，返回app的名字和价格。
     '''
     global count
     count += 1
