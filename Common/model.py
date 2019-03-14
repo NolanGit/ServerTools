@@ -32,5 +32,5 @@ class AppPrice(peewee.Model):
     class Meta:
         database = database
 
-GoldPrice().create_table()
-AppPrice().create_table()
+# GoldPrice().create_table()
+# AppPrice().create_table()

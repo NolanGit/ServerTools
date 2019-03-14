@@ -3,6 +3,7 @@ import re
 import sys
 import time
 import queue
+import datetime
 import requests
 import threading
 sys.path.append('../')
@@ -12,6 +13,7 @@ from bs4 import BeautifulSoup
 from Common.Tools import Tools
 from Common.Mail_Sender import MailSender
 from Common.Global_Var import Global_Var
+from Common.model import AppPrice
 
 count = 0
 q = queue.Queue()
@@ -182,6 +184,14 @@ def mutiple_thread(app_dict):
                 time.sleep(0.5)
     print(result)
 
+def save_data(price):
+    try:
+        crawling_times = int(len(AppPrice.select().where(AppPrice.date == datetime.datetime.now().date())))
+    except Exception:
+        crawling_times = 0
+    p = AppPrice(price=price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
+    p.save()
+    print('price saved...')
 
 app_dict = {
     'webssh-pro/id497714887': 0,

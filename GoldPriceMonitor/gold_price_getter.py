@@ -14,7 +14,7 @@ from selenium.webdriver.chrome.options import Options
 sys.path.append('../')
 sys.path.append('../../')
 from Common.Tools import Tools
-from Common.model import Price
+from Common.model import GoldPrice
 from Common.Mail_Sender import MailSender
 from Common.Global_Var import Global_Var
 
@@ -60,10 +60,10 @@ def get_gold_price():
 
 def save_data(price):
     try:
-        crawling_times = int(len(Price.select().where(Price.date == datetime.datetime.now().date())))
+        crawling_times = int(len(GoldPrice.select().where(GoldPrice.date == datetime.datetime.now().date())))
     except Exception:
         crawling_times = 0
-    p = Price(price=price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
+    p = GoldPrice(price=price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
     print('price saved...')
 
