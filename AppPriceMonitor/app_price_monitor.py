@@ -84,6 +84,7 @@ def app_price_monitor(app_dict):
 
         if app_price_monitor_mail_flag == "None":
             globalvar.set_value('app_price_monitor_mail_flag', 1)
+            app_price_monitor_mail_flag = globalvar.get_value('app_price_monitor_mail_flag')
 
         if app_price_monitor_mail_flag == 1:
             ms = MailSender('AppPriceMonitor', 'App Discount!', content)
@@ -193,7 +194,7 @@ def save_data(app_name,app_price):
         p=AppPrice(app_name=app_name,price=app_price,date=datetime.datetime.now().date(),crawling_times=0, time=datetime.datetime.now().strftime('%H:%M:%S'))
         return ('new app added...')
     try:
-        crawling_times = int(len(AppPrice.select().where(AppPrice.date == datetime.datetime.now().date())))
+        crawling_times = int(len(AppPrice.select().where((AppPrice.date == datetime.datetime.now().date())|(AppPrice.app_name == app_name))))
     except Exception:
         crawling_times = 0
     p = AppPrice(app_name=app_name,price=app_price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
