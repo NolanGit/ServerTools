@@ -189,12 +189,7 @@ def mutiple_thread(app_dict):
 
 def save_data(app_name,app_price):
     try:
-         int(len(AppPrice.select().where(app_name==app_name)))
-    except Exception:
-        p=AppPrice(app_name=app_name,price=app_price,date=datetime.datetime.now().date(),crawling_times=0, time=datetime.datetime.now().strftime('%H:%M:%S'))
-        return ('new app added...')
-    try:
-        crawling_times = int(len(AppPrice.select().where((AppPrice.date == datetime.datetime.now().date())|(AppPrice.app_name == app_name))))
+        crawling_times = int(len(AppPrice.select().where((AppPrice.date == datetime.datetime.now().date())&(AppPrice.app_name == app_name))))
     except Exception:
         crawling_times = 0
     p = AppPrice(app_name=app_name,price=app_price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
@@ -203,7 +198,6 @@ def save_data(app_name,app_price):
 
 app_dict = {
     'webssh-pro/id497714887': 0,
-    'lighten-si-wei-dao-tu/id1132539229': 0,
     'p.m.-splayer-free/id1009747025': 0,
     '7-billion-humans/id1393923918': 0,
     'pico-图像标注/id1395700699': 0,
