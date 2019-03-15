@@ -21,9 +21,9 @@ class GoldPrice(peewee.Model):
 
 class AppPrice(peewee.Model):
     '''
-        price, date, crawling_times, time
+        app name, price, date, crawling_times, time
     '''
-
+    app_name= peewee.CharField()
     price = peewee.CharField()
     date = peewee.DateField()
     crawling_times = peewee.IntegerField()

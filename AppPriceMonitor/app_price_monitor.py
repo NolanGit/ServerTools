@@ -3,6 +3,7 @@ import re
 import sys
 import time
 import queue
+import peewee
 import datetime
 import requests
 import threading
@@ -184,12 +185,14 @@ def mutiple_thread(app_dict):
                 time.sleep(0.5)
     print(result)
 
-def save_data(price):
+def save_data(app_name,app_price):
+    try:
+        AppPrice.select().where()
     try:
         crawling_times = int(len(AppPrice.select().where(AppPrice.date == datetime.datetime.now().date())))
     except Exception:
         crawling_times = 0
-    p = AppPrice(price=price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
+    p = AppPrice(price=app_price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
     print('price saved...')
 
