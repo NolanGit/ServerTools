@@ -74,6 +74,7 @@ def app_price_monitor(app_dict):
 
     for key in app_dict.keys():
         app_name, app_price = get_app_price(key)
+        save_data(app_name,app_price)
 
         if app_price <= float(app_dict[key]):
             content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !'
@@ -187,14 +188,17 @@ def mutiple_thread(app_dict):
 
 def save_data(app_name,app_price):
     try:
-        AppPrice.select().where()
+        AppPrice.select().where(app_name==app_name)
+    except Exception:
+        p=AppPrice(app_name=app_name,price=app_price,date=datetime.datetime.now().date(),crawling_times=0, time=datetime.datetime.now().strftime('%H:%M:%S'))
+        return ('new app added...')
     try:
         crawling_times = int(len(AppPrice.select().where(AppPrice.date == datetime.datetime.now().date())))
     except Exception:
         crawling_times = 0
     p = AppPrice(price=app_price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
-    print('price saved...')
+    return('app price saved...')
 
 app_dict = {
     'webssh-pro/id497714887': 0,
