@@ -188,7 +188,7 @@ def mutiple_thread(app_dict):
 
 def save_data(app_name,app_price):
     try:
-        AppPrice.select().where(app_name==app_name)
+         int(len(AppPrice.select().where(app_name==app_name)))
     except Exception:
         p=AppPrice(app_name=app_name,price=app_price,date=datetime.datetime.now().date(),crawling_times=0, time=datetime.datetime.now().strftime('%H:%M:%S'))
         return ('new app added...')
@@ -196,7 +196,7 @@ def save_data(app_name,app_price):
         crawling_times = int(len(AppPrice.select().where(AppPrice.date == datetime.datetime.now().date())))
     except Exception:
         crawling_times = 0
-    p = AppPrice(price=app_price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
+    p = AppPrice(app_name=app_name,price=app_price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
     return('app price saved...')
 
