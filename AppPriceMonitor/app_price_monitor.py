@@ -200,11 +200,12 @@ def save_data(app_name, app_price):
     return ('app price saved...')
 
 app_dict={}
-print(App.select())
 for query in App.select():
     dict_temp=model_to_dict(query)
     app_dict[dict_temp['app_name']]=int(dict_temp['expect_price'])
-print(app_dict)
+print_result_order_by_length(app_dict)
+app_price_monitor(app_dict)
+
 '''
 app_dict = {
     'webssh-pro/id497714887': 0,
@@ -220,10 +221,9 @@ app_dict = {
     'onescreen-带壳截屏自由创作/id1355476695': 0,
     'thor-http-抓包嗅探分析-接口调试-网络协议/id1210562295': 0
 }
-
-print_result_order_by_length(app_dict)
-app_price_monitor(app_dict)
 '''
+
+
 '''
 #mutiple_thread(app_dict)
 thread_t=threading.Thread(target=get_app_price_and_count, args=('webssh-pro/id497714887', ))
