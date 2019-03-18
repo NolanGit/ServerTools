@@ -11,10 +11,12 @@ sys.path.append('../')
 sys.path.append('../../')
 
 from bs4 import BeautifulSoup
+from playhouse.shortcuts import model_to_dict
+
 from Common.Tools import Tools
 from Common.Mail_Sender import MailSender
 from Common.Global_Var import Global_Var
-from Common.model import AppPrice
+from Common.model import AppPrice, App
 
 count = 0
 q = queue.Queue()
@@ -48,7 +50,7 @@ def get_app_price(app_name_id):
 
             globalvar.set_value('app_price_monitor_mail_flag', 0)
             threading.Timer(21600, count_time_thread).start()
-            
+
             return (None, None)
         else:
             get_app_price(app_name_id)
@@ -74,7 +76,7 @@ def app_price_monitor(app_dict):
 
     for key in app_dict.keys():
         app_name, app_price = get_app_price(key)
-        save_data(app_name,app_price)
+        save_data(app_name, app_price)
 
         if app_price <= float(app_dict[key]):
             content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !'
@@ -157,7 +159,7 @@ def mutiple_thread(app_dict):
     for x in range(start_times):
         for i in range(5):
             app_name_id = app_dict.popitem()[0]
-            thread_t=threading.Thread(target=get_app_price_and_count, args=(app_name_id, ))
+            thread_t = threading.Thread(target=get_app_price_and_count, args=(app_name_id, ))
             thread_t.setDaemon(True)
             thread_t.start
             #Tools().show_process_bar(5 * x + i, len_app_dict)
@@ -172,7 +174,7 @@ def mutiple_thread(app_dict):
                 time.sleep(0.5)
     for x in range(start_times_left):
         app_name_id = app_dict.popitem()[0]
-        thread_t=threading.Thread(target=get_app_price_and_count, args=(app_name_id, ))
+        thread_t = threading.Thread(target=get_app_price_and_count, args=(app_name_id, ))
         thread_t.setDaemon(True)
         thread_t.start
         #Tools().show_process_bar(5 * start_times + x, len_app_dict)
@@ -187,15 +189,21 @@ def mutiple_thread(app_dict):
                 time.sleep(0.5)
     print(result)
 
-def save_data(app_name,app_price):
+
+def save_data(app_name, app_price):
     try:
-        crawling_times = int(len(AppPrice.select().where((AppPrice.date == datetime.datetime.now().date())&(AppPrice.app_name == app_name))))
+        crawling_times = int(len(AppPrice.select().where((AppPrice.date == datetime.datetime.now().date()) & (AppPrice.app_name == app_name))))
     except Exception:
         crawling_times = 0
-    p = AppPrice(app_name=app_name,price=app_price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
+    p = AppPrice(app_name=app_name, price=app_price, date=datetime.datetime.now().date(), crawling_times=crawling_times, time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
-    return('app price saved...')
+    return ('app price saved...')
 
+print(App.select())
+for query in App.select():
+    dict_var=model_to_dict(query)
+    print(dict_var)
+'''
 app_dict = {
     'webssh-pro/id497714887': 0,
     'p.m.-splayer-free/id1009747025': 0,
@@ -213,7 +221,7 @@ app_dict = {
 
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
-
+'''
 '''
 #mutiple_thread(app_dict)
 thread_t=threading.Thread(target=get_app_price_and_count, args=('webssh-pro/id497714887', ))
