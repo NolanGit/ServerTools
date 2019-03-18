@@ -199,10 +199,12 @@ def save_data(app_name, app_price):
     p.save()
     return ('app price saved...')
 
+app_dict={}
 print(App.select())
 for query in App.select():
-    dict_var=model_to_dict(query)
-    print(dict_var)
+    dict_temp=model_to_dict(query)
+    app_dict[dict_temp['app_name']]=int(dict_temp['expect_price'])
+print(app_dict)
 '''
 app_dict = {
     'webssh-pro/id497714887': 0,
