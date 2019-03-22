@@ -45,4 +45,4 @@ class AppPrice(peewee.Model):
 
 # GoldPrice().create_table()
 # AppPrice().create_table()
-App().create_table()
+# App().create_table()
