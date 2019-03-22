@@ -25,6 +25,7 @@ class App(peewee.Model):
     '''
     app_name= peewee.CharField()
     expect_price = peewee.IntegerField()
+    is_valid = peewee.IntegerField()
 
     class Meta:
         database = database
