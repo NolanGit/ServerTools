@@ -56,29 +56,43 @@ def save_temp(city_name, max_temp, min_temp):
 
 def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
     city_code = City.select('id').where(City.city_name == city_name)
-    p = AQI(city_code=city_code, site_name=site_name, aqi=aqi, main=main, pm10=pm10, pm25=pm25, no2=no2, so2=so2, co=co, o3=o3, date=datetime.datetime.now().date(), time=datetime.datetime.now().strftime('%H:%M:%S'))
+    p = AQI(
+        city_code=city_code,
+        site_name=site_name,
+        aqi=aqi,
+        main=main,
+        pm10=pm10,
+        pm25=pm25,
+        no2=no2,
+        so2=so2,
+        co=co,
+        o3=o3,
+        date=datetime.datetime.now().date(),
+        time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
     print('data saved...')
 
 
 key = get_key()
 today_tmp_max, today_tmp_min = get_temp(key, 'changchun')
-#save_temp('changchun',today_tmp_max, today_tmp_min)
+save_temp('changchun', today_tmp_max, today_tmp_min)
+print('TEMP: changchun temperature saved')
 
 aqi_json = get_aqi(key, 'changchun')
 city_aqi = aqi_json['air_now_city']
 city_aqi['site_name'] = '-'
-print(city_aqi)
-site_aqi=aqi_json['air_now_station']
+save_aqi('changchun', city_aqi['site_name'], city_aqi['aqi'], city_aqi['main'], city_aqi['pm10'], city_aqi['pm25'], city_aqi['no2'], city_aqi['so2'], city_aqi['co'], city_aqi['o3'])
+print('AQI: changchun '+ '[-]'+' saved')
+site_aqi = aqi_json['air_now_station']
 for single_aqi in site_aqi:
-    print('site_name= '+single_aqi['air_sta']) 
-    print('aqi= '+single_aqi['aqi']) 
-    print('main= '+single_aqi['main']) 
-    print('pm10= '+single_aqi['pm10']) 
-    print('pm25= '+single_aqi['pm25']) 
-    print('no2= '+single_aqi['no2']) 
-    print('so2= '+single_aqi['so2']) 
-    print('co= '+single_aqi['co']) 
-    print('o3= '+single_aqi['o3'])
-    print('='*10)
-    
+    site_name = single_aqi['air_sta']
+    aqi = single_aqi['aqi']
+    main = single_aqi['main']
+    pm10 = single_aqi['pm10']
+    pm25 = single_aqi['pm25']
+    no2 = single_aqi['no2']
+    so2 = single_aqi['so2']
+    co = single_aqi['co']
+    o3 = single_aqi['o3']
+    save_aqi('changchun', site_name, aqi, main, pm10, pm25, no2, so2, co, o3)
+    print('AQI: changchun '+ '['+site_name+']'+' saved')
