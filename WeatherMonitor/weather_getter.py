@@ -51,7 +51,6 @@ def save_temp(city_name, max_temp, min_temp):
     city_code = City.select('id').where(City.city_name == city_name)
     p = Weather(city_code=city_code, max_temp=max_temp, min_temp=min_temp, date=datetime.datetime.now().date(), time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
-    print('data saved...')
 
 
 def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
@@ -76,11 +75,14 @@ def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
         time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
 
-
 key = get_key()
-today_tmp_max, today_tmp_min = get_temp(key, 'changchun')
-save_temp('长春', today_tmp_max, today_tmp_min)
-print('TEMP: 长春 temperature saved')
+
+try:
+    crawling_times = int(len(Weather.select().where((Weather.date == datetime.datetime.now().date()) & (Weather.site_name == '长春'))))
+except Exception:
+    today_tmp_max, today_tmp_min = get_temp(key, 'changchun')
+    save_temp('长春', today_tmp_max, today_tmp_min)
+    print('TEMP: 长春 temperature saved')
 
 aqi_json = get_aqi(key, 'changchun')
 city_aqi = aqi_json['air_now_city']
