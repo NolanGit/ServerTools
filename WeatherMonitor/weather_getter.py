@@ -81,7 +81,7 @@ print('TEMP: 长春 temperature saved')
 aqi_json = get_aqi(key, 'changchun')
 city_aqi = aqi_json['air_now_city']
 city_aqi['site_name'] = '-'
-save_aqi('changchun', city_aqi['site_name'], city_aqi['aqi'], city_aqi['main'], city_aqi['pm10'], city_aqi['pm25'], city_aqi['no2'], city_aqi['so2'], city_aqi['co'], city_aqi['o3'])
+save_aqi('长春', city_aqi['site_name'], city_aqi['aqi'], city_aqi['main'], city_aqi['pm10'], city_aqi['pm25'], city_aqi['no2'], city_aqi['so2'], city_aqi['co'], city_aqi['o3'])
 print('AQI: 长春 '+ '[-]'+' saved')
 site_aqi = aqi_json['air_now_station']
 for single_aqi in site_aqi:
