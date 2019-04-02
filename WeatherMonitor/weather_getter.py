@@ -43,7 +43,6 @@ def get_temp(key: str, location: str):
 
 def get_aqi(key: str, location: str):
     payload = {'location': location, 'key': key}
-    r = requests.get('https://free-api.heweather.com/s6/weather/forecast', params=payload)
     r = requests.get('https://free-api.heweather.net/s6/air/now', params=payload)
     return (r.json()['HeWeather6'][0])
 
@@ -56,7 +55,7 @@ def save_temp(city_name, max_temp, min_temp):
 
 
 def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
-    city_code = AQI.select('id').where(City.city_name == city_name)
+    city_code = City.select('id').where(City.city_name == city_name)
     p = AQI(city_code=city_code, site_name=site_name, aqi=aqi, main=main, pm10=pm10, pm25=pm25, no2=no2, so2=so2, co=co, o3=o3, date=datetime.datetime.now().date(), time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
     print('data saved...')
@@ -64,7 +63,7 @@ def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
 
 key = get_key()
 today_tmp_max, today_tmp_min = get_temp(key, 'changchun')
-save_temp('changchun',today_tmp_max, today_tmp_min)
+#save_temp('changchun',today_tmp_max, today_tmp_min)
 
 aqi_json = get_aqi(key, 'changchun')
 city_aqi = aqi_json['air_now_city']
@@ -72,6 +71,14 @@ city_aqi['site_name'] = '-'
 print(city_aqi)
 site_aqi=aqi_json['air_now_station']
 for single_aqi in site_aqi:
+    print('site_name= '+single_aqi['air_sta']) 
+    print('aqi= '+single_aqi['aqi']) 
+    print('main= '+single_aqi['main']) 
+    print('pm10= '+single_aqi['pm10']) 
+    print('pm25= '+single_aqi['pm25']) 
+    print('no2= '+single_aqi['no2']) 
+    print('so2= '+single_aqi['so2']) 
+    print('co= '+single_aqi['co']) 
+    print('o3= '+single_aqi['o3'])
     print('='*10)
-    print(single_aqi)
     
