@@ -51,7 +51,7 @@ class City(peewee.Model):
         city_name, province
     '''
     city_name = peewee.CharField()
-    province = peewee.CharField()
+    province_id = peewee.CharField()
 
     class Meta:
         database = database
@@ -110,3 +110,5 @@ class AQI(peewee.Model):
 # Weather().create_table()
 # AQI().drop_table()
 # AQI().create_table()
+City().create_table()
+Province().create_table()
