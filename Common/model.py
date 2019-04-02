@@ -110,5 +110,5 @@ class AQI(peewee.Model):
 # Weather().create_table()
 # AQI().drop_table()
 # AQI().create_table()
-City().create_table()
-Province().create_table()
+# City().create_table()
+# Province().create_table()

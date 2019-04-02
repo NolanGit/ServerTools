@@ -48,7 +48,7 @@ def get_aqi(key: str, location: str):
     return (r.json()['HeWeather6'][0])
 
 
-def save_temp(city_name, max_temp, min_temp, date, time):
+def save_temp(city_name, max_temp, min_temp):
     city_code = City.select('id').where(City.city_name == city_name)
     p = Weather(city_code=city_code, max_temp=max_temp, min_temp=min_temp, date=datetime.datetime.now().date(), time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
@@ -64,6 +64,7 @@ def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
 
 key = get_key()
 today_tmp_max, today_tmp_min = get_temp(key, 'changchun')
+save_temp('changchun',today_tmp_max, today_tmp_min)
 
 aqi_json = get_aqi(key, 'changchun')
 city_aqi = aqi_json['air_now_city']
