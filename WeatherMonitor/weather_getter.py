@@ -56,6 +56,10 @@ def save_temp(city_name, max_temp, min_temp):
 
 def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
     city_code = City.select('id').where(City.city_name == city_name)
+    try:
+        crawling_times = int(len(AQI.select().where((AQI.date == datetime.datetime.now().date()) & (AQI.site_name == '-'))))
+    except Exception:
+        crawling_times = 0
     p = AQI(
         city_code=city_code,
         site_name=site_name,
@@ -67,6 +71,7 @@ def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
         so2=so2,
         co=co,
         o3=o3,
+        crawling_times=crawling_times,
         date=datetime.datetime.now().date(),
         time=datetime.datetime.now().strftime('%H:%M:%S'))
     p.save()
