@@ -77,9 +77,9 @@ def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
 
 key = get_key()
 
-try:
-    crawling_times = int(len(Weather.select().where((Weather.date == datetime.datetime.now().date()) & (Weather.site_name == '长春'))))
-except Exception:
+
+crawling_times = int(len(Weather.select().where((Weather.date == datetime.datetime.now().date()) & (Weather.site_name == '长春'))))
+if crawling_times ==0:
     today_tmp_max, today_tmp_min = get_temp(key, 'changchun')
     save_temp('长春', today_tmp_max, today_tmp_min)
     print('TEMP: 长春 temperature saved')
