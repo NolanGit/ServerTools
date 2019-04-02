@@ -79,8 +79,8 @@ def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
 
 key = get_key()
 
-
-crawling_times = Weather.select().where((Weather.date == datetime.datetime.now().date()) & (Weather.city_code == '长春')).count()
+city_code = City.select().where(City.city_name == '长春').get()
+crawling_times = Weather.select().where((Weather.date == datetime.datetime.now().date()) & (Weather.city_code == city_code)).count()
 if crawling_times ==0:
     today_tmp_max, today_tmp_min = get_temp(key, 'changchun')
     save_temp('长春', today_tmp_max, today_tmp_min)
