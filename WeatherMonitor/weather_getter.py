@@ -58,7 +58,7 @@ def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
     city_code = City.select().where(City.city_name == city_name).get()
     city_code = city_code.id
     try:
-        crawling_times = int(len(AQI.select().where((AQI.date == datetime.datetime.now().date()) & (AQI.site_name == site_name))))
+        crawling_times = AQI.select().where((AQI.date == datetime.datetime.now().date()) & (AQI.site_name == site_name)).count()
     except Exception:
         crawling_times = 0
     p = AQI(
@@ -80,7 +80,7 @@ def save_aqi(city_name, site_name, aqi, main, pm10, pm25, no2, so2, co, o3):
 key = get_key()
 
 
-crawling_times = int(len(Weather.select().where((Weather.date == datetime.datetime.now().date()) & (Weather.city_code == '长春'))))
+crawling_times = Weather.select().where((Weather.date == datetime.datetime.now().date()) & (Weather.city_code == '长春')).count()
 if crawling_times ==0:
     today_tmp_max, today_tmp_min = get_temp(key, 'changchun')
     save_temp('长春', today_tmp_max, today_tmp_min)
