@@ -27,7 +27,7 @@ def get_gold_price():
     chrome_options = Options()
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--log-level=3')
-    driver = webdriver.Chrome(executable_path=('/usr/share/chromedriver'), chrome_options=chrome_options)
+    driver = webdriver.Chrome(executable_path=('/usr/bin/chromedriver'), chrome_options=chrome_options)
 
     for x in range(5):
         driver.get("http://www.dyhjw.com/hjtd")
