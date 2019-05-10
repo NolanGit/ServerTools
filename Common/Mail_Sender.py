@@ -13,7 +13,7 @@ if 'Windows' in platform.platform() and 'Linux' not in platform.platform():
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using C:/Users/sunhaoran/Documents/GitHub/ServerTools/ServerTools.config ...')
     cf.read('C:/Users/sunhaoran/Documents/GitHub/ServerTools/ServerTools.config')
 elif 'Linux' in platform.platform() and 'Ubuntu' not in platform.platform():
-    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using /home/pi/Documents/Github/ServerTools/RaspberryPi.config ...')
+    print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using /home/pi/Documents/Github/RaspberryPi.config ...')
     cf.read('/home/pi/Documents/Github/RaspberryPi.config')
 elif 'Ubuntu' in platform.platform():
     print(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())) + ' Using /root/Documents/GitHub/ServerTools/ServerTools.config ...')
