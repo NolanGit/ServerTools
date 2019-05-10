@@ -82,7 +82,7 @@ def send_wechat_threshold(max, min, price):
     price = int(price)
     if (price > max or price < min) and GOLD_MAIL_FLAG:
         ws=Wechat_Sender()
-        ws.send('Gold Price Monitor','current gold price is ' + str(price)
+        ws.send('Gold Price Monitor','current gold price is ' + str(price))
         
 
 price = get_gold_price()
