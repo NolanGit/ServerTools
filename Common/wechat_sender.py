@@ -38,7 +38,17 @@ class Wechat_Sender(object):
         Returns:
             code（str）
         '''
-        payload = {'text': text, 'desp': desp+ '\n'*20}
+        payload = {'text': text, 'desp': desp}
         r = requests.get('https://sc.ftqq.com/' + SCKEY + '.send', params=payload)
-        print(r)
+        print(r.text['errmsg'])
+        if r.text['errno']==0:
+            from Mail_Sender import MailSender
+            ms=MailSender('Administrator','push wechat failed!',desp)
+            ms.send_it()
+            return 'success'
+        else:
+            from Mail_Sender import MailSender
+            ms=MailSender('Administrator','push wechat failed!',desp)
+            ms.send_it()
+            return 'failed'
         return str(r)

@@ -13,7 +13,6 @@ from selenium.webdriver.chrome.options import Options
 
 sys.path.append('../')
 sys.path.append('../../')
-from Common.Tools import Tools
 from Common.model import GoldPrice
 from Common.Global_Var import Global_Var
 from Common.wechat_sender import Wechat_Sender
