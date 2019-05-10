@@ -15,8 +15,8 @@ sys.path.append('../')
 sys.path.append('../../')
 from Common.Tools import Tools
 from Common.model import GoldPrice
-from Common.Mail_Sender import MailSender
 from Common.Global_Var import Global_Var
+from Common.wechat_sender import Wechat_Sender
 
 
 def get_gold_price():
@@ -53,6 +53,7 @@ def get_gold_price():
             break
     driver.quit()
     if divs:
+        print('price:'+divs.get_text())
         return float(divs.get_text())
     else:
         return None
@@ -68,7 +69,7 @@ def save_data(price):
     print('price saved...')
 
 
-def send_mail_threshold(max, min, price):
+def send_wechat_threshold(max, min, price):
     cf = configparser.ConfigParser()
     if 'Windows' in platform.platform() and 'Linux' not in platform.platform():
         cf.read('C:/Users/sunhaoran/Documents/GitHub/ServerTools/ServerTools.config')
@@ -80,9 +81,10 @@ def send_mail_threshold(max, min, price):
 
     price = int(price)
     if (price > max or price < min) and GOLD_MAIL_FLAG:
-        mail = MailSender('Administrator', 'Gold Price Monitor', 'current gold price is ' + price)
-
+        ws=Wechat_Sender()
+        ws.send('Gold Price Monitor','current gold price is ' + str(price)
+        
 
 price = get_gold_price()
 save_data(price)
-send_mail_threshold(300, 270, price)
+send_wechat_threshold(300, 270, price)
