@@ -7,7 +7,7 @@ import platform
 import configparser
 sys.path.append('../')
 sys.path.append('../../')
-from Common.Mail_Sender import MailSender
+from Common.wechat_sender import Wechat_Sender
 
 
 def get_key():
@@ -43,18 +43,18 @@ def get_weather(key):
     tomorow_tmp_min = tomorow_forecast['tmp_min']  # 明天最低气温
     if (int(today_code_n) > 299 and int(today_code_n) < 500) or (int(tomorow_code_d) > 299 and int(tomorow_code_d) < 500):
         weather_content = '降水注意：' + '\n' + '今天夜间天气为【' + today_txt_n + '】，最高气温：' + str(today_tmp_max) + '°C，最低气温：' + str(today_tmp_min) + '°C；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】，最高气温' + str(tomorow_tmp_max) + '°C，最低气温' + str(
-            tomorow_tmp_min) + '°C。'
+            tomorow_tmp_min) + '°C。' + '\n'
     if (int(today_code_n) > 501 and int(today_code_n) < 900) or (int(tomorow_code_d) > 501 and int(tomorow_code_d) < 900):
-        air_content = '空气质量注意：' + '\n' + '今天夜间天气为【' + today_txt_n + '】；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】'
+        air_content = '空气质量注意：' + '\n' + '今天夜间天气为【' + today_txt_n + '】；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】' + '\n'
     current_month = time.strftime("%m", time.localtime())
     if (int(current_month) > 0 and int(current_month) < 5) or (int(current_month) > 8 and int(current_month) <= 12):
         print('当前是%s月%s日' % (current_month,time.strftime("%d", time.localtime())))
         if (int(tomorow_tmp_min) - int(today_tmp_min)) <= -5:
-            temprature_content = '温度注意：明日最低气温为' + tomorow_tmp_min + '°C！'
+            temprature_content = '温度注意：明日最低气温为' + tomorow_tmp_min + '°C！' + '\n'
     if int(current_month) > 4 and int(current_month) < 9:
         print('当前是%s月%s日' % (current_month,time.strftime("%d", time.localtime())))
         if (int(tomorow_tmp_max) - int(today_tmp_max)) >= 5:
-            temprature_content = '温度注意：明日最高气温为' + tomorow_tmp_max + '°C！'
+            temprature_content = '温度注意：明日最高气温为' + tomorow_tmp_max + '°C！' + '\n'
 
     return weather_content + air_content + temprature_content
 
@@ -63,6 +63,6 @@ key = get_key()
 content = get_weather(key)
 print(content)
 if content != '':
-    ms = MailSender('WeatherMonitor', 'Weather Anomaly!', content)
-    ms.send_it()
+    ws = Wechat_Sender()
+    ws.send('Weather Anomaly!', content)
 print('='*39)

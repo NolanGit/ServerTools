@@ -87,4 +87,4 @@ def send_wechat_threshold(max, min, price):
 
 price = get_gold_price()
 save_data(price)
-send_wechat_threshold(300, 270, price)
+send_wechat_threshold(300, 300, price)
