@@ -6,4 +6,4 @@ weather_monitor.py:
 - 接口使用[和风天气](www.heweather.com)
 
 weather_getter.py:
-- 获取数据饼保存至数据库，代码逻辑相同
+- 获取数据并保存至数据库，代码逻辑相同
