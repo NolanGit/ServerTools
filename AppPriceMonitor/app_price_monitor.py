@@ -78,7 +78,7 @@ def app_price_monitor(app_dict):
         app_name, app_price = get_app_price(key)
         save_data(app_name, app_price)
 
-        if app_price:
+        if app_price <= float(app_dict[key]):
             content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !' + '\n'
 
     if content != '':
