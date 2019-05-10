@@ -38,6 +38,7 @@ class Wechat_Sender(object):
         Returns:
             code（str）
         '''
-        payload = {'text': text, 'desp': desp}
+        payload = {'text': text, 'desp': desp+ '\n'*20}
         r = requests.get('https://sc.ftqq.com/' + SCKEY + '.send', params=payload)
+        print(r)
         return str(r)
