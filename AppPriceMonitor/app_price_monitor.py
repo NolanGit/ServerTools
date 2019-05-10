@@ -78,8 +78,8 @@ def app_price_monitor(app_dict):
         app_name, app_price = get_app_price(key)
         save_data(app_name, app_price)
 
-        if app_price :
-            content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !'
+        if app_price:
+            content = content + '\n' + '[' + app_name + ']' + ' is ¥' + str(app_price) + ' now !' + '\n'
 
     if content != '':
         app_price_monitor_mail_flag = globalvar.get_value('app_price_monitor_mail_flag')
@@ -199,13 +199,13 @@ def save_data(app_name, app_price):
     p.save()
     return ('app price saved...')
 
-app_dict={}
+
+app_dict = {}
 for query in App.select():
-    dict_temp=model_to_dict(query)
-    app_dict[dict_temp['app_name']]=int(dict_temp['expect_price'])
+    dict_temp = model_to_dict(query)
+    app_dict[dict_temp['app_name']] = int(dict_temp['expect_price'])
 print_result_order_by_length(app_dict)
 app_price_monitor(app_dict)
-
 '''
 app_dict = {
     'webssh-pro/id497714887': 0,
@@ -222,8 +222,6 @@ app_dict = {
     'thor-http-抓包嗅探分析-接口调试-网络协议/id1210562295': 0
 }
 '''
-
-
 '''
 #mutiple_thread(app_dict)
 thread_t=threading.Thread(target=get_app_price_and_count, args=('webssh-pro/id497714887', ))
