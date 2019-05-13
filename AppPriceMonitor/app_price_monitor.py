@@ -201,7 +201,7 @@ def save_data(app_name, app_price):
 
 
 app_dict = {}
-for query in App.select():
+for query in App.select().where(App.is_valid==1):
     dict_temp = model_to_dict(query)
     app_dict[dict_temp['app_name']] = int(dict_temp['expect_price'])
 print_result_order_by_length(app_dict)
