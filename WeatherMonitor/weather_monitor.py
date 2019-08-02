@@ -54,7 +54,7 @@ def get_weather(key):
             temprature_content = '温度注意：明日最低气温为' + tomorow_tmp_min + '°C！' + '\n'
     if int(current_month) > 4 and int(current_month) < 9:
         print('当前是%s月%s日' % (current_month, time.strftime("%d", time.localtime())))
-        if ((int(tomorow_tmp_max) - int(today_tmp_max)) >= 5) or (int(tomorow_tmp_max >= 30)):
+        if ((int(tomorow_tmp_max) - int(today_tmp_max)) >= 5) or (int(tomorow_tmp_max) >= 30):
             temprature_content = '温度注意：明日最高气温为' + tomorow_tmp_max + '°C！' + '\n'
 
     return weather_content + air_content + temprature_content
