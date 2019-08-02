@@ -44,6 +44,7 @@ def get_weather(key):
     if (int(today_code_n) > 299 and int(today_code_n) < 500) or (int(tomorow_code_d) > 299 and int(tomorow_code_d) < 500):
         weather_content = '降水注意：' + '\n' + '今天夜间天气为【' + today_txt_n + '】，最高气温：' + str(today_tmp_max) + '°C，最低气温：' + str(today_tmp_min) + '°C；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】，最高气温' + str(
             tomorow_tmp_max) + '°C，最低气温' + str(tomorow_tmp_min) + '°C。' + '\n'
+        print(weather_content)
     if (int(today_code_n) > 501 and int(today_code_n) < 900) or (int(tomorow_code_d) > 501 and int(tomorow_code_d) < 900):
         air_content = '空气质量注意：' + '\n' + '今天夜间天气为【' + today_txt_n + '】；' + '\n' + '明天白天天气为【' + tomorow_txt_d + '】' + '\n'
     current_month = time.strftime("%m", time.localtime())
@@ -53,7 +54,7 @@ def get_weather(key):
             temprature_content = '温度注意：明日最低气温为' + tomorow_tmp_min + '°C！' + '\n'
     if int(current_month) > 4 and int(current_month) < 9:
         print('当前是%s月%s日' % (current_month, time.strftime("%d", time.localtime())))
-        if ((int(tomorow_tmp_max) - int(today_tmp_max)) >= 5) or (tomorow_tmp_max >= 30):
+        if ((int(tomorow_tmp_max) - int(today_tmp_max)) >= 5) or (int(tomorow_tmp_max >= 30)):
             temprature_content = '温度注意：明日最高气温为' + tomorow_tmp_max + '°C！' + '\n'
 
     return weather_content + air_content + temprature_content
@@ -64,6 +65,9 @@ key = get_key()
 content = get_weather(key)
 print(content)
 if content != '':
-    ws = Wechat_Sender()
-    ws.send('Weather Anomaly!', content)
+    try:
+        ws = Wechat_Sender()
+        ws.send('Weather Anomaly!', content)
+    except Exception as e:
+        print(e)
 print('=' * 39)
