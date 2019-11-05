@@ -6,6 +6,7 @@ import peewee
 import datetime
 import requests
 import platform
+import traceback
 import configparser
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -34,20 +35,23 @@ KINDLE_MAIN_URL = cf.get('config', 'KINDLE_MAIN_URL')
 
 
 def push():
+    try:
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--log-level=3')
+        driver = webdriver.Chrome(executable_path=('/usr/bin/chromedriver'), chrome_options=chrome_options)
 
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--log-level=3')
-    driver = webdriver.Chrome(executable_path=('/usr/bin/chromedriver'), chrome_options=chrome_options)
-
-    driver.get(KINDLE_LOGIN_URL)
-    common_actions = CommonActions(driver)
-    common_actions.send('field-email_address',KINDLE_lOGIN_USERNAME)
-    common_actions.send('field-password',KINDLE_lOGIN_PASSWORD)
-    common_actions.click("//input[@class='submit-button']")
-    time.sleep(5)
-    driver.get(KINDLE_MAIN_URL)
-    common_actions.click("//button[@class='button-secondary']")
+        driver.get(KINDLE_LOGIN_URL)
+        common_actions = CommonActions(driver)
+        common_actions.send('field-email_address',KINDLE_lOGIN_USERNAME)
+        common_actions.send('field-password',KINDLE_lOGIN_PASSWORD)
+        common_actions.click("//input[@class='submit-button']")
+        time.sleep(5)
+        driver.get(KINDLE_MAIN_URL)
+        common_actions.click("//button[@class='button-secondary']")
+    except Exception as e:
+        print(e)
+        traceback.print_exc()
     
     
 push()
