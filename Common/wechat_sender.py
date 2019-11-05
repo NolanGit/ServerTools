@@ -23,29 +23,30 @@ class Wechat_Sender(object):
 
     '''
         使用服务"Server酱"(http://sc.ftqq.com)，感谢大佬。
+        send()
     '''
 
     def __init__(self):
         pass
 
-    def send(self, text, desp):
+    def send(self, title, content):
         '''向微信推送通知
             
         Args:
-            text (str)
-            desp (str)
+            title (str)
+            content (str)
 
         Returns:
             code（str）
         '''
-        payload = {'text': text, 'desp': desp}
+        payload = {'text': title, 'desp': content}
         r = requests.get('https://sc.ftqq.com/' + SCKEY + '.send', params=payload)
         print(eval(r.text)['errmsg'])
         if eval(r.text)['errno']==0:
             return 'success'
         else:
             from .Mail_Sender import MailSender
-            ms=MailSender('Administrator','push wechat failed!',desp)
+            ms=MailSender('Administrator','push wechat failed!',content)
             ms.send_it()
             return 'failed'
         return str(r)
