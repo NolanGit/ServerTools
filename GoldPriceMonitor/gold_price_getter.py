@@ -8,8 +8,6 @@ import requests
 import platform
 import configparser
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 sys.path.append('../')
 sys.path.append('../../')
@@ -23,16 +21,10 @@ def get_gold_price():
     返回当前黄金价格
     '''
 
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--log-level=3')
-    driver = webdriver.Chrome(executable_path=('/usr/bin/chromedriver'), chrome_options=chrome_options)
 
     for x in range(5):
-        driver.get("http://www.dyhjw.com/hjtd")
-        time.sleep(5)
-        current_html = driver.page_source
-        soup = BeautifulSoup(current_html, 'lxml')
+        response = requests.get("http://www.dyhjw.com/hjtd")
+        soup = BeautifulSoup(response.text, 'lxml')
 
         divs = soup.find(class_='nom last green')
         if not divs:
@@ -52,7 +44,7 @@ def get_gold_price():
             break
     driver.quit()
     if divs:
-        print('price:'+divs.get_text())
+        print('price:' + divs.get_text())
         return float(divs.get_text())
     else:
         return None
@@ -80,9 +72,9 @@ def send_wechat_threshold(max, min, price):
 
     price = int(price)
     if (price > max or price < min) and GOLD_MAIL_FLAG:
-        ws=Wechat_Sender()
-        ws.send('Gold Price Monitor','current gold price is ' + str(price))
-        
+        ws = Wechat_Sender()
+        ws.send('Gold Price Monitor', 'current gold price is ' + str(price))
+
 
 price = get_gold_price()
 save_data(price)
